@@ -1,4 +1,4 @@
-import oyaml
+import pureyaml
 import sys
 import os
 
@@ -61,7 +61,11 @@ def add_element(key, value, depth, output):
   return output
 
 try:
-  input = oyaml.load(sys.stdin.read())
+  # pyodine compatibility
+  if sys.argv[0]:
+    input_str = sys.stdin.read()
+  
+  input = pureyaml.loads(input_str)
 
   if len(sys.argv) != 2:
     candidate_ag_w_ver = input['apiVersion']
