@@ -60,10 +60,9 @@ def add_element(key, value, depth, output):
 
   return output
 
-
-
 try:
-  input = yaml.load(sys.stdin.read())
+  if not input:
+    input = yaml.load(sys.stdin.read())
 
   if len(sys.argv) != 2:
     candidate_ag_w_ver = input['apiVersion']
@@ -117,6 +116,7 @@ spec:
   print(output)
 
 except Exception as e:
+  output = ""
   exc_type, exc_obj, exc_tb = sys.exc_info()
   fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
   print(exc_type, fname, exc_tb.tb_lineno)
