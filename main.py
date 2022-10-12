@@ -1,4 +1,4 @@
-import yaml
+import oyaml
 import sys
 import os
 
@@ -61,8 +61,7 @@ def add_element(key, value, depth, output):
   return output
 
 try:
-  if not input:
-    input = yaml.load(sys.stdin.read())
+  input = oyaml.load(sys.stdin.read())
 
   if len(sys.argv) != 2:
     candidate_ag_w_ver = input['apiVersion']
