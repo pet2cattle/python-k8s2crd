@@ -63,7 +63,7 @@ def add_element(key, value, depth, output):
 try:
   # pyodine compatibility
   if sys.argv[0]:
-    input_str = sys.stdin.read()
+    input_str = sys.stdin.read() + "\n"
   
   input = pureyaml.loads(input_str)
 
@@ -124,3 +124,4 @@ except Exception as e:
   fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
   print(exc_type, fname, exc_tb.tb_lineno)
   sys.exit("Error: "+str(e))
+
