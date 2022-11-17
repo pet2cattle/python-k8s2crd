@@ -91,7 +91,7 @@ else:
 output = """apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-name: """+input['kind'].lower()+"""s."""+api_group+"""
+  name: """+input['kind'].lower()+"""s."""+api_group+"""
 spec:
 group: """+api_group+"""
 names:
