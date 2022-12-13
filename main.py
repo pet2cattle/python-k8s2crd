@@ -55,6 +55,8 @@ def add_element(key, value, depth, output):
       else:
         for inner_key in value:
           output = add_element(inner_key, value[inner_key], depth+2, output)
+    elif value is None:
+      output += '  type: string\n'
     else:
       sys.exit("Error parsing object - unexpected value: "+str(value)+" ("+str(type(value))+")")
 
@@ -88,23 +90,31 @@ else:
   api_group=tk_apigroup[0]
   api_version="v1"
 
+try:
+  if input['metadata']['namespace']:
+    crd_scope = 'Namespaced'
+  else:
+    crd_scope = 'Cluster'
+except:
+  crd_scope = 'Cluster'
+
 output = """apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: """+input['kind'].lower()+"""s."""+api_group+"""
 spec:
-group: """+api_group+"""
-names:
-  kind: """+input['kind']+"""
-  plural: """+input['kind'].lower()+"""s
-scope: Namespaced
-versions:
-- name: """+api_version+"""
-  served: true
-  storage: true
-  schema:
-    openAPIV3Schema:
-      type: object"""
+  group: """+api_group+"""
+  names:
+    kind: """+input['kind']+"""
+    plural: """+input['kind'].lower()+"""s
+  scope: """+crd_scope+"""
+  versions:
+  - name: """+api_version+"""
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object"""
 found_element = False
 depth = 0
 for key in input:
